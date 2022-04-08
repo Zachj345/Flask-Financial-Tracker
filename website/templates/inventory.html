@@ -1,0 +1,106 @@
+<html>
+  {%extends 'base.html'%}
+  <title>{% block title %} Inventory page {% endblock %}</title>
+
+  {%block content%}
+  <head>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.0/css/bootstrap.min.css"
+      integrity="sha256-/ykJw/wDxMa0AQhHDYfuMEwVb4JHMx9h4jD4XvHqVzU="
+      crossorigin="anonymous"
+    />
+    <style>
+      p {
+        font-size: 18px;
+      }
+      a {
+        color: black;
+      }
+      .parent {
+        margin: auto;
+        padding: 20px;
+        display: grid;
+        grid-gap: 20px;
+        grid-template-columns: repeat(3, 350px);
+      }
+      .child {
+        padding: 10px;
+        background-color: rgb(177, 118, 118);
+        margin: 20px;
+        text-align: center;
+        width: 320px;
+
+        /* float: left; */
+      }
+      li {
+        list-style: none;
+      }
+      .delete-word {
+        text-decoration: wavy;
+        font-family: cursive;
+        background-color: darkred;
+        border: 3px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="parent">
+      {%for piece, item in both_dbs%}
+      <div class="child">
+        <p style="font-size: 26px; text-decoration: underline">
+          {{piece.title}}
+        </p>
+
+        <p>production cost: ${{piece.prodcost | int}}</p>
+        <p>sale price: ${{piece.price}}</p>
+
+        <ul>
+          <li>
+            small count: {{item.small}}<a href="/sub-small/{{item.id}}"
+              >&nbsp - &nbsp</a
+            >
+            <a href="/add-small/{{item.id}}">&nbsp + &nbsp</a>
+          </li>
+          <li>
+            medium count: {{item.med}}
+            <a href="/sub-med/{{item.id}}">&nbsp - &nbsp</a>
+            <a href="/add-med/{{item.id}}">&nbsp + &nbsp</a>
+          </li>
+          <li>
+            large count: {{item.large}}
+            <a href="/sub-large/{{item.id}}"> &nbsp - &nbsp</a>
+            <a href="/add-large/{{item.id}}">&nbsp + &nbsp</a>
+          </li>
+          <li>
+            XL count: {{item.xl}}
+            <a href="/sub-xl/{{item.id}}"> &nbsp - &nbsp</a>
+            <a href="/add-xl/{{item.id}}">&nbsp + &nbsp</a>
+          </li>
+          <li>
+            XXL count: {{item.xxl}}
+            <a href="/sub-xxl/{{item.id}}"> &nbsp - &nbsp</a>
+            <a href="/add-xxl/{{item.id}}">&nbsp + &nbsp</a>
+          </li>
+        </ul>
+
+        <p>acumulative production cost: ${{sum_prod_cost(item.id) | int}}</p>
+        <p>acumulative price: ${{item_sum(item.id)}}</p>
+        <p>
+          current potential profit margin: ${{item_sum(item.id) -
+          sum_prod_cost(item.id) | int}}
+        </p>
+        <p>currently in stock: {{total_instock(item.id)}} items</p>
+        <br />
+
+        <a class="btn btn-primary delete-word" href="/delete/{{item.id}}"
+          >Delete Item</a
+        >
+        <br />
+      </div>
+      {% endfor %}
+    </div>
+  </body>
+  {%endblock%}
+</html>
