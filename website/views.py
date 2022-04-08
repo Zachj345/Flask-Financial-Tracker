@@ -49,7 +49,7 @@ def home():
         flash('Items successfully entered!', category='success')
         return redirect(url_for('views.inventory'))
 
-    return render_template('home.html', user=current_user, usernames=User.query.all())
+    return render_template('home.html', user=current_user)
 
 
 @views.route('/delete-user/<string:username>')
