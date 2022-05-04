@@ -13,7 +13,7 @@ def create_app():
     app.config['SECRET_KEY'] = 'secret key'
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
     app.config['SQLALCHEMY_BINDS'] = {
-        'piece': 'sqlite:///database2.db', 'inventory': 'sqlite:///database3.db'}
+        'piece': 'sqlite:///database.db', 'inventory': 'sqlite:///database.db'}
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db.init_app(app)
 
